@@ -1,4 +1,4 @@
-package com.astontech.rest;
+package com.astontech.rest.domain;
 
 import lombok.Data;
 
@@ -18,4 +18,10 @@ public class Product {
     private String sku;
 
     private String description;
+    private Integer quantity;
+    private Double price;
+    private Double weight;
+    private String dimensions;
+
+
 }

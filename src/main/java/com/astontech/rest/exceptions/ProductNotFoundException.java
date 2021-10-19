@@ -1,8 +1,8 @@
-package com.astontech.rest;
+package com.astontech.rest.exceptions;
 
 public class ProductNotFoundException extends RuntimeException {
 
-    ProductNotFoundException(String id) {
+    public ProductNotFoundException(String id) {
         super("Could not find product " + id);
     }
 }
