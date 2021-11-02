@@ -4,6 +4,8 @@ import com.astontech.rest.domain.Product;
 import com.astontech.rest.exceptions.FieldNotFoundException;
 import com.astontech.rest.exceptions.ProductNotFoundException;
 import com.astontech.rest.repositories.ProductRepo;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -19,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value="productCache", key="#id")
     public Product findBySkuOrId(String sku, Integer id) throws ProductNotFoundException {
         return productRepo.findBySkuOrId(sku, id)
                 .orElseThrow(() -> new ProductNotFoundException((sku == null ? String.valueOf(id) : sku)));
@@ -35,11 +38,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value="productCache", key="#product.id")
     public Product updateProduct(Product product) {
         return productRepo.save(product);
     }
 
     @Override
+    @CacheEvict(value="productCache", key="#id")
     public Product patchProduct(Map<String, Object> updates, Integer id) throws FieldNotFoundException{
         //find product by id or throw ex
         Product productToPatch = productRepo.findBySkuOrId(null, id)
@@ -67,11 +72,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value="productCache", key="#product.id")
     public void deleteProduct(Product product) {
         productRepo.delete(product);
     }
 
     @Override
+    @CacheEvict(value="productCache", key="#id")
     public void deleteProduct(Integer id) {
         productRepo.deleteById(id);
     }

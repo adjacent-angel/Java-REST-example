@@ -23,7 +23,7 @@ public class HeadersRequestFilter extends OncePerRequestFilter {
         request.getHeaderNames()
                 .asIterator()
                 .forEachRemaining(header -> {
-                    log.info("Header: " + header + ":" + request.getHeader(header));
+//                    log.info("Header: " + header + ":" + request.getHeader(header));
                 });
 
 
